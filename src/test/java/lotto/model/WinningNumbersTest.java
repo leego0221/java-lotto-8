@@ -46,6 +46,29 @@ class WinningNumbersTest {
                 .hasMessageContaining(ERROR_MESSAGE);
     }
 
+    @Test
+    void 보너스_번호가_당첨_번호들과_중복되지_않으면_테스트에_성공한다() {
+        // given
+        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
+        int bonusNumber = 7;
+
+        // when & then
+        assertThatCode(() -> winningNumbers.checkDuplicate(bonusNumber))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 보너스_번호가_당첨_번호들과_중복되면_예외가_발생한다() {
+        // given
+        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
+        int bonusNumber = 3;
+
+        // when & then
+        assertThatThrownBy(() -> winningNumbers.checkDuplicate(bonusNumber))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ERROR_MESSAGE);
+    }
+
     static Stream<Arguments> generateInvalidSizeWinningNumbers() {
         return Stream.of(
                 Arguments.of(List.of(1, 2, 3, 4, 5)),
