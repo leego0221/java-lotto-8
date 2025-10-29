@@ -11,7 +11,7 @@ class InputValidatorTest {
     private final InputValidator inputValidator = new InputValidator();
 
     @ParameterizedTest
-    @ValueSource(strings = {" ", "\t", "\n"})
+    @ValueSource(strings = {"", " ", "\t", "\n"})
     void 입력이_공백_계열이면_예외가_발생한다(String input) {
         // given by parameter
 
