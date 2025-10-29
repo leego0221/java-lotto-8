@@ -11,13 +11,8 @@ public class WinningNumbers {
         this.winningNumbers = winningNumbers;
     }
 
-    public void checkDuplicate(int bonusNumber) {
-        boolean isDuplicate = winningNumbers.stream()
-                .anyMatch(winningNumber -> winningNumber == bonusNumber);
-
-        if (isDuplicate) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호가 당첨 번호와 중복됩니다.");
-        }
+    public List<Integer> getWinningNumbers() {
+        return List.copyOf(winningNumbers);
     }
 
     private void validate(List<Integer> winningNumbers) {
