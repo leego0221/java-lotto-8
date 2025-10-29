@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import lotto.model.PurchaseAmount;
 import lotto.validation.InputValidator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
@@ -18,6 +19,7 @@ public class LottoController {
         String purchaseAmountInput = inputView.readPurchaseAmount();
         InputValidator.validateIsBlank(purchaseAmountInput);
         InputValidator.validateIsInteger(purchaseAmountInput);
+        PurchaseAmount purchaseAmount = new PurchaseAmount(Integer.parseInt(purchaseAmountInput));
 
         String winningNumbersInput = inputView.readWinningNumbers();
         InputValidator.validateIsBlank(winningNumbersInput);
@@ -26,7 +28,7 @@ public class LottoController {
         InputValidator.validateIsBlank(bonusNumberInput);
         InputValidator.validateIsInteger(bonusNumberInput);
 
-        System.out.println("purchaseAmountInput = " + purchaseAmountInput);
+        System.out.println("purchaseAmount = " + purchaseAmount.getPurchaseAmount());
         System.out.println("winningNumbersInput = " + winningNumbersInput);
         System.out.println("bonusNumberInput = " + bonusNumberInput);
     }
