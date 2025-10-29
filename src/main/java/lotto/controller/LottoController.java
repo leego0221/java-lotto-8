@@ -15,7 +15,9 @@ public class LottoController {
 
     public void run() {
         String purchaseAmountInput = inputView.readPurchaseAmount();
+        String winningNumbersInput = inputView.readWinningNumbers();
 
         System.out.println("purchaseAmountInput = " + purchaseAmountInput);
+        System.out.println("winningNumbersInput = " + winningNumbersInput);
     }
 }
