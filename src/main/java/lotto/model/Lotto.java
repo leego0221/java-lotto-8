@@ -17,5 +17,12 @@ public class Lotto {
         }
     }
 
-    // TODO: 추가 기능 구현
+    @Override
+    public String toString() {
+        List<String> numberValue = numbers.stream()
+                .map(number -> Integer.toString(number))
+                .toList();
+        String result = String.join(", ", numberValue);
+        return "[" + result + "]";
+    }
 }

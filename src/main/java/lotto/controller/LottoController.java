@@ -30,8 +30,9 @@ public class LottoController {
         lottoService.purchase(purchaseAmount);
         List<Lotto> lottos = lottoService.getLottos();
 
-        // 구매 개수 출력
+        // 구매 개수와 구매한 로또 리스트 출력
         outputView.showPurchaseCount(lottos.size());
+        outputView.showPurchasedLottos(lottos);
 
         // 당첨 번호 입력
         String winningNumbersInput = inputView.readWinningNumbers();
