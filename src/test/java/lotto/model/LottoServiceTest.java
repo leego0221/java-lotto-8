@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class LottoServiceTest {
 
@@ -33,5 +32,17 @@ class LottoServiceTest {
         assertThatThrownBy(() -> lottoService.checkDuplicate(winningNumbers, bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_MESSAGE);
+    }
+
+    @Test
+    void 구입_금액에_해당하는_만큼_로또를_발행한다() {
+        // given
+        PurchaseAmount purchaseAmount = new PurchaseAmount(3000);
+
+        // when
+        lottoService.purchase(purchaseAmount);
+
+        // then
+        assertThat(lottoService.getLottos()).hasSize(3);
     }
 }
