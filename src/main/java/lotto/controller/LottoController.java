@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import lotto.model.BonusNumber;
 import lotto.model.PurchaseAmount;
 import lotto.validation.InputValidator;
 import lotto.view.InputView;
@@ -27,9 +28,10 @@ public class LottoController {
         String bonusNumberInput = inputView.readBonusNumber();
         InputValidator.validateIsBlank(bonusNumberInput);
         InputValidator.validateIsInteger(bonusNumberInput);
+        BonusNumber bonusNumber = new BonusNumber(Integer.parseInt(bonusNumberInput));
 
         System.out.println("purchaseAmount = " + purchaseAmount.getPurchaseAmount());
         System.out.println("winningNumbersInput = " + winningNumbersInput);
-        System.out.println("bonusNumberInput = " + bonusNumberInput);
+        System.out.println("bonusNumber = " + bonusNumber.getBonusNumber());
     }
 }
