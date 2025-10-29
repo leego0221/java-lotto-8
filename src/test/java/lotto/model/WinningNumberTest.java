@@ -22,7 +22,7 @@ class WinningNumberTest {
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 0, 46, 100})
-    void 보너스_번호가_1에서_45_사이를_벗어나면_예외가_발생한다(int input) {
+    void 하나의_당첨_번호가_1에서_45_사이를_벗어나면_예외가_발생한다(int input) {
         // given by parameter
 
         // when & then

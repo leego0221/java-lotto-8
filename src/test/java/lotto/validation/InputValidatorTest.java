@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class InputValidatorTest {
 
     private static final String ERROR_MESSAGE = "[ERROR]";
-    private final InputValidator inputValidator = new InputValidator();
 
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "\t", "\n"})
@@ -16,7 +15,7 @@ class InputValidatorTest {
         // given by parameter
 
         // when & then
-        assertThatThrownBy(() -> inputValidator.validateIsBlank(input))
+        assertThatThrownBy(() -> InputValidator.validateIsBlank(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_MESSAGE);
     }
@@ -27,7 +26,7 @@ class InputValidatorTest {
         // given by parameter
 
         // when & then
-        assertThatThrownBy(() -> inputValidator.validateIsInteger(input))
+        assertThatThrownBy(() -> InputValidator.validateIsInteger(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_MESSAGE);
     }
