@@ -16,8 +16,10 @@ public class LottoController {
     public void run() {
         String purchaseAmountInput = inputView.readPurchaseAmount();
         String winningNumbersInput = inputView.readWinningNumbers();
+        String bonusNumberInput = inputView.readBonusNumber();
 
         System.out.println("purchaseAmountInput = " + purchaseAmountInput);
         System.out.println("winningNumbersInput = " + winningNumbersInput);
+        System.out.println("bonusNumberInput = " + bonusNumberInput);
     }
 }
