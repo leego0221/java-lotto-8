@@ -13,6 +13,15 @@ public class LottoService {
         return List.copyOf(lottos);
     }
 
+    public void purchase(PurchaseAmount purchaseAmount) {
+        int purchaseCount = purchaseAmount.getPurchaseAmount() / 1000;
+        for (int i = 0; i < purchaseCount; i++) {
+            List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+            Lotto lotto = new Lotto(numbers);
+            lottos.add(lotto);
+        }
+    }
+
     public void checkDuplicate(WinningNumbers winningNumbers, BonusNumber bonusNumber) {
         boolean isDuplicate = winningNumbers.getWinningNumbers()
                 .stream()
@@ -20,15 +29,6 @@ public class LottoService {
 
         if (isDuplicate) {
             throw new IllegalArgumentException("[ERROR] 보너스 번호가 당첨 번호와 중복됩니다.");
-        }
-    }
-
-    public void purchase(PurchaseAmount purchaseAmount) {
-        int purchaseCount = purchaseAmount.getPurchaseAmount() / 1000;
-        for (int i = 0; i < purchaseCount; i++) {
-            List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
-            Lotto lotto = new Lotto(numbers);
-            lottos.add(lotto);
         }
     }
 }
