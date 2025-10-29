@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class LottoServiceTest {
 
     private static final String ERROR_MESSAGE = "[ERROR]";
+    private final LottoService lottoService = new LottoService();
 
     @Test
     void 보너스_번호가_당첨_번호들과_중복되지_않으면_테스트에_성공한다() {
@@ -18,7 +19,7 @@ class LottoServiceTest {
         WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
 
         // when & then
-        assertThatCode(() -> new LottoService(winningNumbers, bonusNumber))
+        assertThatCode(() -> lottoService.checkDuplicate(winningNumbers, bonusNumber))
                 .doesNotThrowAnyException();
     }
 
@@ -29,7 +30,7 @@ class LottoServiceTest {
         WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
 
         // when & then
-        assertThatThrownBy(() -> new LottoService(winningNumbers, bonusNumber))
+        assertThatThrownBy(() -> lottoService.checkDuplicate(winningNumbers, bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_MESSAGE);
     }
