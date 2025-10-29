@@ -21,7 +21,7 @@ class ValidatorTest {
     }
 
     @Test
-    void 구입_금액이_1000원_단위가_아니면_예외를_던진다() {
+    void 구입_금액이_1000원_단위가_아니면_예외가_발생한다() {
         // given
         Validator validator = new Validator();
         int purchaseAmount = 3500;
