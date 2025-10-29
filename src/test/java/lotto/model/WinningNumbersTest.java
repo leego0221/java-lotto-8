@@ -17,7 +17,7 @@ class WinningNumbersTest {
     @Test
     void 당첨_번호가_6개이면_테스트에_성공한다() {
         // given
-        List<Integer> input = List.of(1, 2, 3, 4, 5, 6);
+        List<String> input = List.of("1", "2", "3", "4", "5", "6");
 
         // when & then
         assertThatCode(() -> new WinningNumbers(input))
@@ -26,7 +26,7 @@ class WinningNumbersTest {
 
     @ParameterizedTest
     @MethodSource("generateInvalidSizeWinningNumbers")
-    void 당첨_번호가_6개가_아니면_예외가_발생한다(List<Integer> input) {
+    void 당첨_번호가_6개가_아니면_예외가_발생한다(List<String> input) {
         // given by parameter
 
         // when & then
@@ -38,7 +38,7 @@ class WinningNumbersTest {
     @Test
     void 당첨_번호_중에_중복이_있으면_예외가_발생한다() {
         // given
-        List<Integer> input = List.of(1, 2, 3, 3, 4, 5);
+        List<String> input = List.of("1", "2", "3", "3", "4", "5");
 
         // when & then
         assertThatThrownBy(() -> new WinningNumbers(input))
@@ -48,8 +48,8 @@ class WinningNumbersTest {
 
     static Stream<Arguments> generateInvalidSizeWinningNumbers() {
         return Stream.of(
-                Arguments.of(List.of(1, 2, 3, 4, 5)),
-                Arguments.of(List.of(1, 2, 3, 4, 5, 6, 7))
+                Arguments.of(List.of("1", "2", "3", "4", "5")),
+                Arguments.of(List.of("1", "2", "3", "4", "5", "6", "7"))
         );
     }
 }

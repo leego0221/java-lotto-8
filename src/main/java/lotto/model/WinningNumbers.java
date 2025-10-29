@@ -4,18 +4,21 @@ import java.util.List;
 
 public class WinningNumbers {
 
-    private final List<Integer> winningNumbers;
+    private final List<WinningNumber> winningNumbers;
 
-    public WinningNumbers(List<Integer> winningNumbers) {
+    public WinningNumbers(List<String> winningNumbers) {
         validate(winningNumbers);
-        this.winningNumbers = winningNumbers;
+        this.winningNumbers = winningNumbers.stream()
+                .map(Integer::parseInt)
+                .map(WinningNumber::new)
+                .toList();;
     }
 
-    public List<Integer> getWinningNumbers() {
+    public List<WinningNumber> getWinningNumbers() {
         return List.copyOf(winningNumbers);
     }
 
-    private void validate(List<Integer> winningNumbers) {
+    private void validate(List<String> winningNumbers) {
         if (winningNumbers.size() != 6) {
             throw new IllegalArgumentException("[ERROR] 당첨 번호는 6개여야 합니다.");
         }

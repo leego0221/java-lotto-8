@@ -3,6 +3,7 @@ package lotto.controller;
 import lotto.model.BonusNumber;
 import lotto.model.PurchaseAmount;
 import lotto.model.WinningNumber;
+import lotto.model.WinningNumbers;
 import lotto.parser.WinningNumberParser;
 import lotto.validation.InputValidator;
 import lotto.view.InputView;
@@ -34,10 +35,7 @@ public class LottoController {
             InputValidator.validateIsBlank(winningNumber);
             InputValidator.validateIsInteger(winningNumber);
         });
-        List<WinningNumber> winningNumbers = parsedWinningNumbers.stream()
-                .map(Integer::parseInt)
-                .map(WinningNumber::new)
-                .toList();
+        WinningNumbers winningNumbers = new WinningNumbers(parsedWinningNumbers);
 
         String bonusNumberInput = inputView.readBonusNumber();
         InputValidator.validateIsBlank(bonusNumberInput);
@@ -45,8 +43,8 @@ public class LottoController {
         BonusNumber bonusNumber = new BonusNumber(Integer.parseInt(bonusNumberInput));
 
         System.out.println("purchaseAmount = " + purchaseAmount.getPurchaseAmount());
-        winningNumbers.forEach(winningNumber ->
-            System.out.println("winningNumber = " + winningNumber.getWinningNumber())
+        winningNumbers.getWinningNumbers().forEach(winningNumber ->
+                System.out.println("winningNumber = " + winningNumber)
         );
         System.out.println("bonusNumber = " + bonusNumber.getBonusNumber());
     }
