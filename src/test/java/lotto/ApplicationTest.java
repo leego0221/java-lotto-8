@@ -1,13 +1,14 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import lotto.validation.Validator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class ApplicationTest extends NsTest {
     private static final String ERROR_MESSAGE = "[ERROR]";
@@ -52,6 +53,28 @@ class ApplicationTest extends NsTest {
             runException("1000j");
             assertThat(output()).contains(ERROR_MESSAGE);
         });
+    }
+
+    @Test
+    void 구입_금액이_1000원_단위이면_테스트에_성공한다() {
+        // given
+        Validator validator = new Validator();
+        int purchaseAmount = 3000;
+
+        // when & then
+        assertThatCode(() -> validator.validatePurchaseAmount(purchaseAmount))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 구입_금액이_1000원_단위가_아니면_예외를_던진다() {
+        // given
+        Validator validator = new Validator();
+        int purchaseAmount = 3500;
+
+        // when & then
+        assertThatThrownBy(() -> validator.validatePurchaseAmount(purchaseAmount))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Override
