@@ -1,13 +1,16 @@
 package lotto.model;
 
+import camp.nextstep.edu.missionutils.Randoms;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class LottoService {
 
-    private List<Lotto> lottos;
+    private final List<Lotto> lottos = new ArrayList<>();
 
     public List<Lotto> getLottos() {
-        return List.of();
+        return List.copyOf(lottos);
     }
 
     public void checkDuplicate(WinningNumbers winningNumbers, BonusNumber bonusNumber) {
@@ -21,5 +24,11 @@ public class LottoService {
     }
 
     public void purchase(PurchaseAmount purchaseAmount) {
+        int purchaseCount = purchaseAmount.getPurchaseAmount() / 1000;
+        for (int i = 0; i < purchaseCount; i++) {
+            List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+            Lotto lotto = new Lotto(numbers);
+            lottos.add(lotto);
+        }
     }
 }
