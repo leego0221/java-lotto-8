@@ -5,11 +5,9 @@ import java.util.List;
 
 public class WinningNumberParser {
 
-    public static List<Integer> parse(String input) {
+    public static List<String> parse(String input) {
         String[] output = input.split(",", -1);
-
         return Arrays.stream(output)
-                .map(Integer::parseInt)
                 .toList();
     }
 }
