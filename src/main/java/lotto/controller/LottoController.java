@@ -6,6 +6,7 @@ import lotto.validation.InputValidator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class LottoController {
@@ -13,11 +14,18 @@ public class LottoController {
     private final InputView inputView;
     private final OutputView outputView;
     private final LottoService lottoService;
+    private final LottoRankingService lottoRankingService;
 
-    public LottoController(InputView inputView, OutputView outputView, LottoService lottoService) {
+    public LottoController(
+            InputView inputView,
+            OutputView outputView,
+            LottoService lottoService,
+            LottoRankingService lottoRankingService
+    ) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.lottoService = lottoService;
+        this.lottoRankingService = lottoRankingService;
     }
 
     public void run() {
@@ -27,6 +35,7 @@ public class LottoController {
         InputValidator.validateIsInteger(purchaseAmountInput);
         PurchaseAmount purchaseAmount = new PurchaseAmount(Integer.parseInt(purchaseAmountInput));
 
+        // 구입 금액에 해당하는 만큼 로또 발행하기
         lottoService.purchase(purchaseAmount);
         List<Lotto> lottos = lottoService.getLottos();
 
@@ -52,10 +61,21 @@ public class LottoController {
         InputValidator.validateIsInteger(bonusNumberInput);
         BonusNumber bonusNumber = new BonusNumber(Integer.parseInt(bonusNumberInput));
 
-        System.out.println("purchaseAmount = " + purchaseAmount.getPurchaseAmount());
-        winningNumbers.getWinningNumbers().forEach(winningNumber ->
-                System.out.println("winningNumber = " + winningNumber)
-        );
-        System.out.println("bonusNumber = " + bonusNumber.getBonusNumber());
+        // 등수 배열 임시 생성
+        int[] rawRanks = new int[7];
+        lottos.forEach(lotto -> {
+            // 번호 일치 여부에 따라 등수 매기기
+            int rank = lottoRankingService.determineRank(lotto, winningNumbers, bonusNumber);
+            rawRanks[rank]++;
+        });
+
+        // 당첨 통계 출력
+        outputView.showWinningStatisticsTitle();
+        List<Integer> ranks = Arrays.stream(rawRanks)
+                .boxed()
+                .toList();
+        outputView.showWinningStatistics(ranks);
+
+        inputView.close();
     }
 }
