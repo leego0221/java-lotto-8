@@ -33,9 +33,7 @@ public class LottoController {
 
     public void run() {
         // [입력] 구매 금액
-        String purchaseAmountInput = inputView.readPurchaseAmount();
-        int parsedPurchaseAmount = InputParser.parseInteger(purchaseAmountInput);
-        PurchaseAmount purchaseAmount = new PurchaseAmount(parsedPurchaseAmount);
+        PurchaseAmount purchaseAmount = readPurchaseAmount();
 
         // [기능] 구입 금액에 해당하는 만큼 로또 발행
         lottoService.purchase(purchaseAmount);
@@ -46,15 +44,9 @@ public class LottoController {
         outputView.showPurchaseCount(lottoDtos.size());
         outputView.showPurchasedLottos(lottoDtos);
 
-        // [입력] 당첨 번호
-        String winningNumbersInput = inputView.readWinningNumbers();
-        List<Integer> parsedWinningNumbers = InputParser.parseWinningNumbers(winningNumbersInput);
-        WinningNumbers winningNumbers = new WinningNumbers(parsedWinningNumbers);
-
-        // [입력] 보너스 번호
-        String bonusNumberInput = inputView.readBonusNumber();
-        int parsedBonusNumber = InputParser.parseInteger(bonusNumberInput);
-        BonusNumber bonusNumber = new BonusNumber(parsedBonusNumber);
+        // [입력] 당첨 번호와 보너스 번호
+        WinningNumbers winningNumbers = readWinningNumbers();
+        BonusNumber bonusNumber = readBonusNumber();
 
         // [기능] 등수 배열 임시 생성
         int[] rawRanks = new int[7];
@@ -86,6 +78,24 @@ public class LottoController {
         outputView.showProfitRate(profitRate);
 
         inputView.close();
+    }
+
+    private PurchaseAmount readPurchaseAmount() {
+        String purchaseAmountInput = inputView.readPurchaseAmount();
+        int parsedPurchaseAmount = InputParser.parseInteger(purchaseAmountInput);
+        return new PurchaseAmount(parsedPurchaseAmount);
+    }
+
+    private WinningNumbers readWinningNumbers() {
+        String winningNumbersInput = inputView.readWinningNumbers();
+        List<Integer> parsedWinningNumbers = InputParser.parseWinningNumbers(winningNumbersInput);
+        return new WinningNumbers(parsedWinningNumbers);
+    }
+
+    private BonusNumber readBonusNumber() {
+        String bonusNumberInput = inputView.readBonusNumber();
+        int parsedBonusNumber = InputParser.parseInteger(bonusNumberInput);
+        return new BonusNumber(parsedBonusNumber);
     }
 
     private List<LottoDto> mapToLottoDtos(List<Lotto> lottos) {
