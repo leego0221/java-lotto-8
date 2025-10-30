@@ -2,12 +2,15 @@ package lotto;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ApplicationTest extends NsTest {
 
@@ -53,6 +56,34 @@ class ApplicationTest extends NsTest {
             runException("1000j");
             assertThat(output()).contains(ERROR_MESSAGE);
         });
+    }
+
+    /**
+     * InputValidatorTest 클래스에서 이동
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "\t", "\n"})
+    void 입력이_공백_계열이면_예외가_발생한다(String input) {
+        // given by parameter
+
+        // when & then
+        assertThatThrownBy(() -> {/* 실행 시 예외 테스트로 변경해야 함 */})
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ERROR_MESSAGE);
+    }
+
+    /**
+     * InputValidatorTest 클래스에서 이동
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"333333333333333", "3.3", "a"})
+    void 입력이_Integer_타입이_아니면_예외가_발생한다(String input) {
+        // given by parameter
+
+        // when & then
+        assertThatThrownBy(() -> {/* 실행 시 예외 테스트로 변경해야 함 */})
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ERROR_MESSAGE);
     }
 
     @Override

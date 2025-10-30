@@ -14,9 +14,9 @@ class InputParserTest {
         String input = "1,2,3,4,5,6";
 
         // when
-        List<String> result = InputParser.parseWinningNumbers(input);
+        List<Integer> result = InputParser.parseWinningNumbers(input);
 
         // then
-        assertThat(result).containsExactly("1", "2", "3", "4", "5", "6");
+        assertThat(result).containsExactly(1, 2, 3, 4, 5, 6);
     }
 }
