@@ -6,10 +6,9 @@ public class WinningNumbers {
 
     private final List<WinningNumber> winningNumbers;
 
-    public WinningNumbers(List<String> winningNumbers) {
+    public WinningNumbers(List<Integer> winningNumbers) {
         validate(winningNumbers);
         this.winningNumbers = winningNumbers.stream()
-                .map(Integer::parseInt)
                 .map(WinningNumber::new)
                 .toList();;
     }
@@ -18,7 +17,7 @@ public class WinningNumbers {
         return List.copyOf(winningNumbers);
     }
 
-    private void validate(List<String> winningNumbers) {
+    private void validate(List<Integer> winningNumbers) {
         if (winningNumbers.size() != 6) {
             throw new IllegalArgumentException("[ERROR] 당첨 번호는 6개여야 합니다.");
         }

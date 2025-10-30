@@ -1,14 +1,12 @@
 package lotto.controller;
 
 import lotto.model.*;
-import lotto.parser.WinningNumberParser;
-import lotto.validation.InputValidator;
+import lotto.parser.InputParser;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class LottoController {
 
@@ -33,52 +31,43 @@ public class LottoController {
     }
 
     public void run() {
-        // 구매 금액 입력
+        // [입력] 구매 금액
         String purchaseAmountInput = inputView.readPurchaseAmount();
-        InputValidator.validateIsBlank(purchaseAmountInput);
-        InputValidator.validateIsInteger(purchaseAmountInput);
-        PurchaseAmount purchaseAmount = new PurchaseAmount(Integer.parseInt(purchaseAmountInput));
+        int parsedPurchaseAmount = InputParser.parseInteger(purchaseAmountInput);
+        PurchaseAmount purchaseAmount = new PurchaseAmount(parsedPurchaseAmount);
 
-        // 구입 금액에 해당하는 만큼 로또 발행하기
+        // [기능] 구입 금액에 해당하는 만큼 로또 발행
         lottoService.purchase(purchaseAmount);
         List<Lotto> lottos = lottoService.getLottos();
 
-        // 구매 개수와 구매한 로또 리스트 출력
+        // [출력] 구매 개수와 구매한 로또 리스트
         outputView.showPurchaseCount(lottos.size());
         outputView.showPurchasedLottos(lottos);
 
-        // 당첨 번호 입력
+        // [입력] 당첨 번호
         String winningNumbersInput = inputView.readWinningNumbers();
-        InputValidator.validateIsBlank(winningNumbersInput);
-
-        // 당첨 번호 입력 파싱
-        List<String> parsedWinningNumbers = WinningNumberParser.parse(winningNumbersInput);
-        parsedWinningNumbers.forEach(winningNumber -> {
-            InputValidator.validateIsBlank(winningNumber);
-            InputValidator.validateIsInteger(winningNumber);
-        });
+        List<Integer> parsedWinningNumbers = InputParser.parseWinningNumbers(winningNumbersInput);
         WinningNumbers winningNumbers = new WinningNumbers(parsedWinningNumbers);
 
-        // 보너스 번호 입력
+        // [입력] 보너스 번호
         String bonusNumberInput = inputView.readBonusNumber();
-        InputValidator.validateIsBlank(bonusNumberInput);
-        InputValidator.validateIsInteger(bonusNumberInput);
-        BonusNumber bonusNumber = new BonusNumber(Integer.parseInt(bonusNumberInput));
+        int parsedBonusNumber = InputParser.parseInteger(bonusNumberInput);
+        BonusNumber bonusNumber = new BonusNumber(parsedBonusNumber);
 
-        // 등수 배열 임시 생성
+        // [기능] 등수 배열 임시 생성
         int[] rawRanks = new int[7];
         lottos.forEach(lotto -> {
-            // 번호 일치 여부에 따라 등수 매기기
+            // [기능] 번호 일치 여부에 따라 등수 매기기
             int rank = lottoRankingService.determineRank(lotto, winningNumbers, bonusNumber);
             rawRanks[rank]++;
         });
 
-        // 등수에 따라 당첨 금액 부여하기
+        // [기능] 등수에 따라 당첨 금액 부여하기
         List<Integer> ranks = Arrays.stream(rawRanks)
                 .boxed()
                 .toList();
 
-        // 수익률 계산
+        // [기능] 수익률 계산
         int totalPurchase = purchaseAmount.getPurchaseAmount();
         long totalPrize = 0L;
         for (int i = 1; i <= 5; i++) {
@@ -89,7 +78,7 @@ public class LottoController {
         }
         String profitRate = lottoRankingService.calculateProfitRate(totalPrize, totalPurchase);
 
-        // 당첨 통계 출력
+        // [출력] 당첨 통계
         outputView.showWinningStatisticsTitle();
         outputView.showWinningStatistics(ranks);
         outputView.showProfitRate(profitRate);

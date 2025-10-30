@@ -1,5 +1,8 @@
 package lotto.validation;
 
+/**
+ * 테스트에서만 사용됨
+ */
 public class InputValidator {
 
     public static void validateIsBlank(String input) {
