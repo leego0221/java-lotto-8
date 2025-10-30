@@ -3,7 +3,9 @@ package lotto.service;
 import camp.nextstep.edu.missionutils.Randoms;
 import lotto.domain.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class LottoService {
@@ -44,7 +46,19 @@ public class LottoService {
         lottoRankCounter.update(matchingCount, isBonusNumberMatched);
     }
 
-    public String calculateProfitRate(long totalPrize, int totalPurchase) {
+    public Map<LottoRank, Integer> getRanks() {
+        return lottoRankCounter.getLottoResult();
+    }
+
+    public String calculateProfitRate(int totalPurchase) {
+        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
+
+        Long totalPrize = lottoResult.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() != 0)
+                .map(entry -> entry.getKey().getPrize() * entry.getValue())
+                .reduce(0L, Long::sum);
+
         double profitRate = (double) totalPrize / totalPurchase * 100;
         return String.format("%.1f", profitRate);
     }

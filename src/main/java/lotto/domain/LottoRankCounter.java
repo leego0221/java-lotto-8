@@ -14,6 +14,10 @@ public class LottoRankCounter {
                 .forEach(rank -> lottoResult.put(rank, INIT_COUNT));
     }
 
+    public Map<LottoRank, Integer> getLottoResult() {
+        return Map.copyOf(lottoResult);
+    }
+
     public void update(int matchingCount, boolean isBonusNumberMatched) {
         LottoRank lottoRank = Arrays.stream(LottoRank.values())
                 .filter(rank -> rank.matches(matchingCount, isBonusNumberMatched))

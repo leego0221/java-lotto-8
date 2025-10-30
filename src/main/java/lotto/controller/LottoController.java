@@ -9,6 +9,7 @@ import lotto.view.OutputView;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class LottoController {
 
@@ -26,6 +27,7 @@ public class LottoController {
         PurchaseAmount purchaseAmount = readPurchaseAmount();
 
         List<Lotto> lottos = lottoService.purchase(purchaseAmount);
+
         List<LottoDto> lottoDtos = mapToLottoDtos(lottos);
         outputView.showPurchaseCount(lottoDtos.size());
         outputView.showPurchasedLottos(lottoDtos);
@@ -34,29 +36,13 @@ public class LottoController {
         BonusNumber bonusNumber = readBonusNumber();
         lottoService.checkDuplicate(winningNumbers, bonusNumber);
 
-        //**************************************************************//
-
-        // [기능] 번호 일치 여부에 따라 등수 매기기
         lottos.forEach(lotto -> lottoService.determineRank(lotto, winningNumbers, bonusNumber));
 
-        // [기능] 등수에 따라 당첨 금액 부여하기
-        List<Integer> ranks = Arrays.stream(rawRanks)
-                .boxed()
-                .toList();
-
-        // [기능] 수익률 계산
         int totalPurchase = purchaseAmount.getPurchaseAmount();
-        long totalPrize = 0L;
-        for (int i = 1; i <= 5; i++) {
-            if (ranks.get(i) != 0) {
-                long prize = lottoService.payPrize(LottoRank.FIFTH/*임의의 값*/);
-                totalPrize += prize;
-            }
-        }
-        String profitRate = lottoService.calculateProfitRate(totalPrize, totalPurchase);
+        String profitRate = lottoService.calculateProfitRate(totalPurchase);
 
-        // [출력] 당첨 통계
         outputView.showWinningStatisticsTitle();
+        Map<LottoRank, Integer> ranks = lottoService.getRanks();
         outputView.showWinningStatistics(ranks);
         outputView.showProfitRate(profitRate);
 
