@@ -7,6 +7,7 @@ import java.util.List;
 public class OutputView {
 
     public void showPurchaseCount(int purchaseCount) {
+        System.out.println();
         System.out.println(purchaseCount + "개를 구매했습니다.");
     }
 
@@ -15,7 +16,9 @@ public class OutputView {
     }
 
     public void showWinningStatisticsTitle() {
-        System.out.println("당첨 통계\n---");
+        System.out.println();
+        System.out.println("당첨 통계");
+        System.out.println("---");
     }
 
     public void showWinningStatistics(List<Integer> ranks) {
@@ -24,5 +27,9 @@ public class OutputView {
         System.out.println("5개 일치 (1,500,000원) - " + ranks.get(3) + "개");
         System.out.println("5개 일치, 보너스 볼 일치 (30,000,000원) - " + ranks.get(2) + "개");
         System.out.println("6개 일치 (2,000,000,000원) - " + ranks.get(1) + "개");
+    }
+
+    public void showProfitRate(String profitRate) {
+        System.out.println("총 수익률은 " + profitRate + "%입니다.");
     }
 }

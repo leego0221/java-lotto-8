@@ -25,6 +25,11 @@ public class LottoRankingService {
         return 0; // 해당 없음
     }
 
+    public String calculateProfitRate(long totalPrize, int totalPurchase) {
+        double profitRate = (double) totalPrize / totalPurchase * 100;
+        return String.format("%.1f", profitRate);
+    }
+
     private int countMatching(Lotto lotto, WinningNumbers winningNumbers) {
         return lotto.countMatching(winningNumbers);
     }

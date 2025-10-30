@@ -8,6 +8,7 @@ import lotto.view.OutputView;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class LottoController {
 
@@ -15,17 +16,20 @@ public class LottoController {
     private final OutputView outputView;
     private final LottoService lottoService;
     private final LottoRankingService lottoRankingService;
+    private final PrizeService prizeService;
 
     public LottoController(
             InputView inputView,
             OutputView outputView,
             LottoService lottoService,
-            LottoRankingService lottoRankingService
+            LottoRankingService lottoRankingService,
+            PrizeService prizeService
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.lottoService = lottoService;
         this.lottoRankingService = lottoRankingService;
+        this.prizeService = prizeService;
     }
 
     public void run() {
@@ -69,12 +73,26 @@ public class LottoController {
             rawRanks[rank]++;
         });
 
-        // 당첨 통계 출력
-        outputView.showWinningStatisticsTitle();
+        // 등수에 따라 당첨 금액 부여하기
         List<Integer> ranks = Arrays.stream(rawRanks)
                 .boxed()
                 .toList();
+
+        // 수익률 계산
+        int totalPurchase = purchaseAmount.getPurchaseAmount();
+        long totalPrize = 0L;
+        for (int i = 1; i <= 5; i++) {
+            if (ranks.get(i) != 0) {
+                long prize = prizeService.payPrize(i);
+                totalPrize += prize;
+            }
+        }
+        String profitRate = lottoRankingService.calculateProfitRate(totalPrize, totalPurchase);
+
+        // 당첨 통계 출력
+        outputView.showWinningStatisticsTitle();
         outputView.showWinningStatistics(ranks);
+        outputView.showProfitRate(profitRate);
 
         inputView.close();
     }
