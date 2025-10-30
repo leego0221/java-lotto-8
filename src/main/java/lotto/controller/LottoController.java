@@ -1,8 +1,9 @@
 package lotto.controller;
 
 import lotto.dto.LottoDto;
-import lotto.model.*;
+import lotto.domain.*;
 import lotto.parser.InputParser;
+import lotto.service.LottoService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 

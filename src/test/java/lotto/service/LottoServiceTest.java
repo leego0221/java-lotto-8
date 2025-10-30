@@ -1,5 +1,9 @@
-package lotto.model;
+package lotto.service;
 
+import lotto.domain.BonusNumber;
+import lotto.domain.Lotto;
+import lotto.domain.PurchaseAmount;
+import lotto.domain.WinningNumbers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

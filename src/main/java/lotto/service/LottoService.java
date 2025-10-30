@@ -1,6 +1,10 @@
-package lotto.model;
+package lotto.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.domain.BonusNumber;
+import lotto.domain.Lotto;
+import lotto.domain.PurchaseAmount;
+import lotto.domain.WinningNumbers;
 
 import java.util.List;
 import java.util.stream.IntStream;
