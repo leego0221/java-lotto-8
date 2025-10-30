@@ -23,7 +23,7 @@ public class Lotto {
 
     public boolean isBonusNumberMatched(BonusNumber bonusNumber) {
         return numbers.stream()
-                .anyMatch(number -> number.equals(bonusNumber.getBonusNumber()));
+                .anyMatch(lottoNumber -> lottoNumber.equals(bonusNumber.getBonusNumber()));
     }
 
     private boolean isWinningNumber(WinningNumbers winningNumbers, Integer lottoNumber) {
