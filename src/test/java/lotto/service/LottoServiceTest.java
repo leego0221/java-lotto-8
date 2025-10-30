@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -59,10 +60,11 @@ class LottoServiceTest {
         BonusNumber bonusNumber = new BonusNumber(7);
 
         // when
-        int rank = lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
 
         // then
-        assertThat(rank).isEqualTo(1);
+        assertThat(lottoResult).contains(entry(LottoRank.FIRST, 1));
     }
 
     @Test
@@ -73,10 +75,11 @@ class LottoServiceTest {
         BonusNumber bonusNumber = new BonusNumber(7);
 
         // when
-        int rank = lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
 
         // then
-        assertThat(rank).isEqualTo(2);
+        assertThat(lottoResult).contains(entry(LottoRank.SECOND, 1));
     }
 
     @Test
@@ -87,10 +90,11 @@ class LottoServiceTest {
         BonusNumber bonusNumber = new BonusNumber(7);
 
         // when
-        int rank = lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
 
         // then
-        assertThat(rank).isEqualTo(3);
+        assertThat(lottoResult).contains(entry(LottoRank.THIRD, 1));
     }
 
     @Test
@@ -101,10 +105,11 @@ class LottoServiceTest {
         BonusNumber bonusNumber = new BonusNumber(7);
 
         // when
-        int rank = lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
 
         // then
-        assertThat(rank).isEqualTo(4);
+        assertThat(lottoResult).contains(entry(LottoRank.FOURTH, 1));
     }
 
     @Test
@@ -115,10 +120,11 @@ class LottoServiceTest {
         BonusNumber bonusNumber = new BonusNumber(7);
 
         // when
-        int rank = lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
+        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
 
         // then
-        assertThat(rank).isEqualTo(5);
+        assertThat(lottoResult).contains(entry(LottoRank.FIFTH, 1));
     }
 
     @ParameterizedTest
