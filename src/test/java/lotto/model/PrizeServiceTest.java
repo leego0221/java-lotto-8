@@ -10,7 +10,7 @@ class PrizeServiceTest {
     private final PrizeService prizeService = new PrizeService();
 
     @ParameterizedTest
-    @CsvSource(value = {"1,2_000_000_000L", "2,30_000_000L", "3,1_500_000L", "4,50_000L", "5,5_000L"})
+    @CsvSource(value = {"1,2000000000", "2,30000000", "3,1500000", "4,50000", "5,5000"})
     void 등수에_따라_당첨_금액을_부여한다(int rank, long winningPrize) {
         // given by parameter
 
