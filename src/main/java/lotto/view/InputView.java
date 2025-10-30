@@ -12,8 +12,8 @@ public class InputView {
         System.out.println(INPUT_PURCHASE_AMOUNT);
         String input = Console.readLine();
 
-        validateIsBlank(input);
-        validateIsInteger(input);
+        validateNotBlank(input);
+        validateInteger(input);
         return input;
     }
 
@@ -22,7 +22,7 @@ public class InputView {
         System.out.println(INPUT_WINNING_NUMBERS);
         String input = Console.readLine();
 
-        validateIsBlank(input);
+        validateNotBlank(input);
         return input;
     }
 
@@ -31,8 +31,8 @@ public class InputView {
         System.out.println(INPUT_BONUS_NUMBER);
         String input = Console.readLine();
 
-        validateIsBlank(input);
-        validateIsInteger(input);
+        validateNotBlank(input);
+        validateInteger(input);
         return input;
     }
 
@@ -44,13 +44,13 @@ public class InputView {
         System.out.println();
     }
 
-    private void validateIsBlank(String input) {
+    private void validateNotBlank(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
         }
     }
 
-    private void validateIsInteger(String input) {
+    private void validateInteger(String input) {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {

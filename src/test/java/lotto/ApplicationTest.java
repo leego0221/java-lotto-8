@@ -9,8 +9,7 @@ import java.util.List;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class ApplicationTest extends NsTest {
 
@@ -82,6 +81,33 @@ class ApplicationTest extends NsTest {
 
         // when & then
         assertThatThrownBy(() -> {/* 실행 시 예외 테스트로 변경해야 함 */})
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ERROR_MESSAGE);
+    }
+
+    /**
+     * WinningNumberTest 클래스에서 이동
+     */
+    @ParameterizedTest
+    @ValueSource(ints = {1, 3, 15, 45})
+    void 하나의_당첨_번호가_1에서_45_사이면_테스트에_성공한다(int input) {
+        // given by parameter
+
+        // when & then
+        assertThatCode(() -> {/* WinningNumbers 테스트로 흡수되어야 함 */})
+                .doesNotThrowAnyException();
+    }
+
+    /**
+     * WinningNumberTest 클래스에서 이동
+     */
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 0, 46, 100})
+    void 하나의_당첨_번호가_1에서_45_사이를_벗어나면_예외가_발생한다(int input) {
+        // given by parameter
+
+        // when & then
+        assertThatThrownBy(() -> {/* WinningNumbers 테스트로 흡수되어야 함 */})
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR_MESSAGE);
     }

@@ -16,24 +16,24 @@ public class InputParser {
         String[] output = input.split(DELIMITER, PARSE_ALL);
         return Arrays.stream(output)
                 .peek(token -> {
-                    validateIsBlank(token);
-                    validateIsInteger(token);
+                    validateNotBlank(token);
+                    validateInteger(token);
                 })
                 .map(Integer::parseInt)
                 .toList();
     }
 
-    private static void validateIsBlank(String input) {
+    private static void validateNotBlank(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
+            throw new IllegalArgumentException("[ERROR] 파싱값이 비어있습니다.");
         }
     }
 
-    private static void validateIsInteger(String input) {
+    private static void validateInteger(String input) {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 입력값이 Integer 타입이 아닙니다.");
+            throw new IllegalArgumentException("[ERROR] 파싱값이 Integer 타입이 아닙니다.");
         }
     }
 }
