@@ -1,12 +1,10 @@
 package lotto.service;
 
-import lotto.domain.BonusNumber;
-import lotto.domain.Lotto;
-import lotto.domain.PurchaseAmount;
-import lotto.domain.WinningNumbers;
+import lotto.domain.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.List;
 
@@ -15,7 +13,8 @@ import static org.assertj.core.api.Assertions.*;
 class LottoServiceTest {
 
     private static final String ERROR_MESSAGE = "[ERROR]";
-    private final LottoService lottoService = new LottoService();
+    private final LottoRankCounter lottoRankCounter = new LottoRankCounter();
+    private final LottoService lottoService = new LottoService(lottoRankCounter);
 
     @Test
     void 보너스_번호가_당첨_번호들과_중복되지_않으면_테스트에_성공한다() {
@@ -123,14 +122,14 @@ class LottoServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"1,2000000000", "2,30000000", "3,1500000", "4,50000", "5,5000"})
-    void 등수에_따라_당첨_금액을_부여한다(int rank, long winningPrize) {
+    @EnumSource(value = LottoRank.class)
+    void 등수에_따라_당첨_금액을_부여한다(LottoRank lottoRank) {
         // given by parameter
 
         // when
-        long prize = lottoService.payPrize(rank);
+        long prize = lottoService.payPrize(lottoRank);
 
         // then
-        assertThat(prize).isEqualTo(winningPrize);
+        assertThat(prize).isEqualTo(lottoRank.getPrize());
     }
 }

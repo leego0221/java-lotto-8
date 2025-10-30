@@ -15,10 +15,11 @@ public class Lotto {
         return List.copyOf(numbers);
     }
 
-    public int countMatching(WinningNumbers winningNumbers) {
-        return (int) numbers.stream()
+    public int countMatchingNumbers(WinningNumbers winningNumbers) {
+        return numbers.stream()
                 .filter(lottoNumber -> isWinningNumber(winningNumbers, lottoNumber))
-                .count();
+                .mapToInt(lottoNumber -> 1)
+                .sum();
     }
 
     public boolean isBonusNumberMatched(BonusNumber bonusNumber) {
