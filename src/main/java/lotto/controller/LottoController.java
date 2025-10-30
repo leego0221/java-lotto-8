@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import lotto.dto.LottoDto;
 import lotto.model.*;
 import lotto.parser.InputParser;
 import lotto.view.InputView;
@@ -41,8 +42,9 @@ public class LottoController {
         List<Lotto> lottos = lottoService.getLottos();
 
         // [출력] 구매 개수와 구매한 로또 리스트
-        outputView.showPurchaseCount(lottos.size());
-        outputView.showPurchasedLottos(lottos);
+        List<LottoDto> lottoDtos = mapToLottoDtos(lottos);
+        outputView.showPurchaseCount(lottoDtos.size());
+        outputView.showPurchasedLottos(lottoDtos);
 
         // [입력] 당첨 번호
         String winningNumbersInput = inputView.readWinningNumbers();
@@ -84,5 +86,11 @@ public class LottoController {
         outputView.showProfitRate(profitRate);
 
         inputView.close();
+    }
+
+    private List<LottoDto> mapToLottoDtos(List<Lotto> lottos) {
+        return lottos.stream()
+                .map(lotto -> new LottoDto(lotto.getNumbers()))
+                .toList();
     }
 }

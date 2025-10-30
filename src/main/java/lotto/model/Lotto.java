@@ -11,15 +11,8 @@ public class Lotto {
         this.numbers = numbers;
     }
 
-    @Override
-    public String toString() {
-        List<String> numberValues = numbers.stream()
-                .sorted()
-                .map(String::valueOf)
-                .toList();
-
-        String result = String.join(", ", numberValues);
-        return "[" + result + "]";
+    public List<Integer> getNumbers() {
+        return List.copyOf(numbers);
     }
 
     public int countMatching(WinningNumbers winningNumbers) {

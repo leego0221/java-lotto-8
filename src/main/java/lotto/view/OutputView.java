@@ -1,22 +1,22 @@
 package lotto.view;
 
-import lotto.model.Lotto;
+import lotto.dto.LottoDto;
 
 import java.util.List;
 
 public class OutputView {
 
     public void showPurchaseCount(int purchaseCount) {
-        System.out.println();
+        printNewLine();
         System.out.println(purchaseCount + "개를 구매했습니다.");
     }
 
-    public void showPurchasedLottos(List<Lotto> lottos) {
-        lottos.forEach(System.out::println);
+    public void showPurchasedLottos(List<LottoDto> lottoDtos) {
+        lottoDtos.forEach(System.out::println);
     }
 
     public void showWinningStatisticsTitle() {
-        System.out.println();
+        printNewLine();
         System.out.println("당첨 통계");
         System.out.println("---");
     }
@@ -31,5 +31,9 @@ public class OutputView {
 
     public void showProfitRate(String profitRate) {
         System.out.println("총 수익률은 " + profitRate + "%입니다.");
+    }
+
+    private void printNewLine() {
+        System.out.println();
     }
 }
