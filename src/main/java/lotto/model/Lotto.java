@@ -42,7 +42,8 @@ public class Lotto {
     @Override
     public String toString() {
         List<String> numberValue = numbers.stream()
-                .map(number -> Integer.toString(number))
+                .sorted()
+                .map(String::valueOf)
                 .toList();
         String result = String.join(", ", numberValue);
         return "[" + result + "]";
