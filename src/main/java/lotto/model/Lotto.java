@@ -11,10 +11,28 @@ public class Lotto {
         this.numbers = numbers;
     }
 
+    public int countMatching(WinningNumbers winningNumbers) {
+        return (int) numbers.stream()
+                .filter(number -> isWinningNumber(winningNumbers, number))
+                .count();
+    }
+    
+    public boolean isBonusNumberMatched(BonusNumber bonusNumber) {
+        return numbers.stream()
+                .anyMatch(number -> number.equals(bonusNumber.getBonusNumber()));
+    }
+
     private void validate(List<Integer> numbers) {
         if (numbers.size() != 6) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
         }
+    }
+
+    private boolean isWinningNumber(WinningNumbers winningNumbers, Integer number) {
+        return winningNumbers.getWinningNumbers()
+                .stream()
+                .map(WinningNumber::getWinningNumber)
+                .anyMatch(winningNumber -> winningNumber.equals(number));
     }
 
     @Override
