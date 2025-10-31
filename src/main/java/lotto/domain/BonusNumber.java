@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import lotto.exception.ErrorCode;
+
 public class BonusNumber {
 
     private final int bonusNumber;
@@ -15,7 +17,7 @@ public class BonusNumber {
 
     private void validate(int bonusNumber) {
         if (bonusNumber < 1 || bonusNumber > 45) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 1에서 45 사이여야 합니다.");
+            throw new IllegalArgumentException(ErrorCode.ERROR_BONUS_INVALID_RANGE.getMessage());
         }
     }
 }

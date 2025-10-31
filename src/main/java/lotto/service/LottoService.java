@@ -2,6 +2,7 @@ package lotto.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import lotto.domain.*;
+import lotto.exception.ErrorCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class LottoService {
                 .anyMatch(winningNumber -> winningNumber == bonusNumber.getBonusNumber());
 
         if (isDuplicate) {
-            throw new IllegalArgumentException("[ERROR] 당첨 번호와 보너스 번호가 중복됩니다.");
+            throw new IllegalArgumentException(ErrorCode.ERROR_NUMBERS_AND_BONUS_DUPLICATE.getMessage());
         }
     }
 

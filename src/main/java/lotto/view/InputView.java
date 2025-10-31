@@ -1,6 +1,7 @@
 package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import lotto.exception.ErrorCode;
 
 public class InputView {
 
@@ -46,7 +47,7 @@ public class InputView {
 
     private void validateNotBlank(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
+            throw new IllegalArgumentException(ErrorCode.ERROR_INPUT_BLANK.getMessage());
         }
     }
 
@@ -54,7 +55,7 @@ public class InputView {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 입력값이 Integer 타입이 아닙니다.");
+            throw new IllegalArgumentException(ErrorCode.ERROR_INPUT_NOT_INTEGER.getMessage());
         }
     }
 }

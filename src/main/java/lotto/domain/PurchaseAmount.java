@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import lotto.exception.ErrorCode;
+
 public class PurchaseAmount {
 
     private final int purchaseAmount;
@@ -14,12 +16,19 @@ public class PurchaseAmount {
     }
 
     private void validate(int purchaseAmount) {
-        if (purchaseAmount < 1000) {
-            throw new IllegalArgumentException("[ERROR] 로또 구입 금액은 1,000원 이상이어야 합니다.");
-        }
+        validateMinimum(purchaseAmount);
+        validateUnit(purchaseAmount);
+    }
 
+    private void validateMinimum(int purchaseAmount) {
+        if (purchaseAmount < 1000) {
+            throw new IllegalArgumentException(ErrorCode.ERROR_AMOUNT_NOT_ENOUGH.getMessage());
+        }
+    }
+
+    private void validateUnit(int purchaseAmount) {
         if (purchaseAmount % 1000 != 0) {
-            throw new IllegalArgumentException("[ERROR] 로또 구입 금액은 1,000원 단위여야 합니다.");
+            throw new IllegalArgumentException(ErrorCode.ERROR_AMOUNT_INVALID_UNIT.getMessage());
         }
     }
 }

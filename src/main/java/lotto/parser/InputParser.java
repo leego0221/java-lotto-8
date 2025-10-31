@@ -1,5 +1,7 @@
 package lotto.parser;
 
+import lotto.exception.ErrorCode;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class InputParser {
 
     private static void validateNotBlank(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 파싱값이 비어있습니다.");
+            throw new IllegalArgumentException(ErrorCode.ERROR_PARSED_BLANK.getMessage());
         }
     }
 
@@ -33,7 +35,7 @@ public class InputParser {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 파싱값이 Integer 타입이 아닙니다.");
+            throw new IllegalArgumentException(ErrorCode.ERROR_PARSED_NOT_INTEGER.getMessage());
         }
     }
 }
