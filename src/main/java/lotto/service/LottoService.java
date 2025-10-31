@@ -4,7 +4,6 @@ import camp.nextstep.edu.missionutils.Randoms;
 import lotto.domain.*;
 import lotto.exception.ErrorCode;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -12,9 +11,11 @@ import java.util.stream.IntStream;
 public class LottoService {
 
     private static final int LOTTO_PRIZE = 1000;
-    private static final int LOTTO_START_NUM = 1;
-    private static final int LOTTO_END_NUM = 45;
+    private static final int LOTTO_NUMBER_MIN = 1;
+    private static final int LOTTO_NUMBER_MAX = 45;
     private static final int LOTTO_NUMBER_COUNT = 6;
+    private static final long INITIAL_TOTAL_PRIZE = 0L;
+    private static final String PROFIT_RATE_DECIMAL_FORMAT = "%.1f";
 
     private final LottoRankCounter lottoRankCounter;
 
@@ -26,7 +27,7 @@ public class LottoService {
         int purchaseCount = purchaseAmount.getPurchaseAmount() / LOTTO_PRIZE;
 
         return IntStream.range(0, purchaseCount)
-                .mapToObj(i -> generateLotto(LOTTO_START_NUM, LOTTO_END_NUM, LOTTO_NUMBER_COUNT))
+                .mapToObj(i -> generateLotto(LOTTO_NUMBER_MIN, LOTTO_NUMBER_MAX, LOTTO_NUMBER_COUNT))
                 .toList();
     }
 
@@ -58,10 +59,10 @@ public class LottoService {
                 .stream()
                 .filter(entry -> entry.getValue() != 0)
                 .map(entry -> entry.getKey().getPrize() * entry.getValue())
-                .reduce(0L, Long::sum);
+                .reduce(INITIAL_TOTAL_PRIZE, Long::sum);
 
         double profitRate = (double) totalPrize / totalPurchase * 100;
-        return String.format("%.1f", profitRate);
+        return String.format(PROFIT_RATE_DECIMAL_FORMAT, profitRate);
     }
 
     public long payPrize(LottoRank lottoRank) {

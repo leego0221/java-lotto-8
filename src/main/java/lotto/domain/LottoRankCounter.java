@@ -6,12 +6,13 @@ import java.util.Map;
 
 public class LottoRankCounter {
 
-    private static final int INIT_COUNT = 0;
+    private static final int INITIAL_COUNT = 0;
+
     private final Map<LottoRank, Integer> lottoResult = new HashMap<>();
 
     public LottoRankCounter() {
         Arrays.stream(LottoRank.values())
-                .forEach(rank -> lottoResult.put(rank, INIT_COUNT));
+                .forEach(rank -> lottoResult.put(rank, INITIAL_COUNT));
     }
 
     public Map<LottoRank, Integer> getLottoResult() {

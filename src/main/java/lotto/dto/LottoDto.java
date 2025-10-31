@@ -4,6 +4,10 @@ import java.util.List;
 
 public class LottoDto {
 
+    private static final String DELIMITER = ", ";
+    private static final String LEFT_BRACKET = "[";
+    private static final String RIGHT_BRACKET = "]";
+
     private final List<Integer> lottoNumbers;
 
     public LottoDto(List<Integer> lottoNumbers) {
@@ -17,7 +21,7 @@ public class LottoDto {
                 .map(String::valueOf)
                 .toList();
 
-        String result = String.join(", ", numberValues);
-        return "[" + result + "]";
+        String result = String.join(DELIMITER, numberValues);
+        return LEFT_BRACKET + result + RIGHT_BRACKET;
     }
 }

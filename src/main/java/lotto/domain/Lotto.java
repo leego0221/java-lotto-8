@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Lotto {
 
+    private static final int LOTTO_NUMBER_COUNT = 6;
+    private static final int LOTTO_NUMBER_MIN = 1;
+    private static final int LOTTO_NUMBER_MAX = 45;
+
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -42,7 +46,7 @@ public class Lotto {
     }
 
     private void validateSize(List<Integer> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != LOTTO_NUMBER_COUNT) {
             throw new IllegalArgumentException(ErrorCode.ERROR_LOTTO_INVALID_SIZE.getMessage());
         }
     }
@@ -54,7 +58,7 @@ public class Lotto {
     }
 
     private void validateRange(int lottoNumber) {
-        if (lottoNumber < 1 || lottoNumber > 45) {
+        if (lottoNumber < LOTTO_NUMBER_MIN || lottoNumber > LOTTO_NUMBER_MAX) {
             throw new IllegalArgumentException(ErrorCode.ERROR_LOTTO_INVALID_RANGE.getMessage());
         }
     }

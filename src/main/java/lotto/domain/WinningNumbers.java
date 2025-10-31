@@ -6,6 +6,10 @@ import java.util.List;
 
 public class WinningNumbers {
 
+    private static final int WINNING_NUMBER_COUNT = 6;
+    private static final int WINNING_NUMBER_MIN = 1;
+    private static final int WINNING_NUMBER_MAX = 45;
+
     private final List<Integer> winningNumbers;
 
     public WinningNumbers(List<Integer> winningNumbers) {
@@ -24,7 +28,7 @@ public class WinningNumbers {
     }
 
     private void validateSize(List<Integer> winningNumbers) {
-        if (winningNumbers.size() != 6) {
+        if (winningNumbers.size() != WINNING_NUMBER_COUNT) {
             throw new IllegalArgumentException(ErrorCode.ERROR_NUMBERS_INVALID_SIZE.getMessage());
         }
     }
@@ -36,7 +40,7 @@ public class WinningNumbers {
     }
 
     private void validateRange(int winningNumber) {
-        if (winningNumber < 1 || winningNumber > 45) {
+        if (winningNumber < WINNING_NUMBER_MIN || winningNumber > WINNING_NUMBER_MAX) {
             throw new IllegalArgumentException(ErrorCode.ERROR_NUMBERS_INVALID_RANGE.getMessage());
         }
     }
