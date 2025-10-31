@@ -8,6 +8,10 @@ import java.util.Map;
 
 public class OutputView {
 
+    public void showRetryMessage(IllegalArgumentException e) {
+        System.out.println(e.getMessage() + " 다시 입력해주세요.");
+    }
+
     public void showPurchaseCount(int purchaseCount) {
         printNewLine();
         System.out.println(purchaseCount + "개를 구매했습니다.");

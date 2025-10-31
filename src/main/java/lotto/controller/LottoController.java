@@ -7,7 +7,6 @@ import lotto.service.LottoService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -50,21 +49,36 @@ public class LottoController {
     }
 
     private PurchaseAmount readPurchaseAmount() {
-        String purchaseAmountInput = inputView.readPurchaseAmount();
-        int parsedPurchaseAmount = InputParser.parseInteger(purchaseAmountInput);
-        return new PurchaseAmount(parsedPurchaseAmount);
+        try {
+            String purchaseAmountInput = inputView.readPurchaseAmount();
+            int parsedPurchaseAmount = InputParser.parseInteger(purchaseAmountInput);
+            return new PurchaseAmount(parsedPurchaseAmount);
+        } catch (IllegalArgumentException e) {
+            outputView.showRetryMessage(e);
+            return readPurchaseAmount();
+        }
     }
 
     private WinningNumbers readWinningNumbers() {
-        String winningNumbersInput = inputView.readWinningNumbers();
-        List<Integer> parsedWinningNumbers = InputParser.parseWinningNumbers(winningNumbersInput);
-        return new WinningNumbers(parsedWinningNumbers);
+        try {
+            String winningNumbersInput = inputView.readWinningNumbers();
+            List<Integer> parsedWinningNumbers = InputParser.parseWinningNumbers(winningNumbersInput);
+            return new WinningNumbers(parsedWinningNumbers);
+        } catch (IllegalArgumentException e) {
+            outputView.showRetryMessage(e);
+            return readWinningNumbers();
+        }
     }
 
     private BonusNumber readBonusNumber() {
-        String bonusNumberInput = inputView.readBonusNumber();
-        int parsedBonusNumber = InputParser.parseInteger(bonusNumberInput);
-        return new BonusNumber(parsedBonusNumber);
+        try {
+            String bonusNumberInput = inputView.readBonusNumber();
+            int parsedBonusNumber = InputParser.parseInteger(bonusNumberInput);
+            return new BonusNumber(parsedBonusNumber);
+        } catch (IllegalArgumentException e) {
+            outputView.showRetryMessage(e);
+            return readBonusNumber();
+        }
     }
 
     private List<LottoDto> mapToLottoDtos(List<Lotto> lottos) {
