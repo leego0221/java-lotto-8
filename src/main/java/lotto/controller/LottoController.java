@@ -33,7 +33,7 @@ public class LottoController {
 
         WinningNumbers winningNumbers = readWinningNumbers();
         BonusNumber bonusNumber = readBonusNumber();
-        lottoService.checkDuplicate(winningNumbers, bonusNumber);
+        checkDuplicate(winningNumbers, bonusNumber);
 
         lottos.forEach(lotto -> lottoService.determineRank(lotto, winningNumbers, bonusNumber));
 
@@ -55,7 +55,7 @@ public class LottoController {
             return new PurchaseAmount(parsedPurchaseAmount);
         } catch (IllegalArgumentException e) {
             outputView.showRetryMessage(e);
-            return readPurchaseAmount();
+            return readPurchaseAmount(); // 재귀 호출
         }
     }
 
@@ -66,7 +66,7 @@ public class LottoController {
             return new WinningNumbers(parsedWinningNumbers);
         } catch (IllegalArgumentException e) {
             outputView.showRetryMessage(e);
-            return readWinningNumbers();
+            return readWinningNumbers(); // 재귀 호출
         }
     }
 
@@ -77,7 +77,16 @@ public class LottoController {
             return new BonusNumber(parsedBonusNumber);
         } catch (IllegalArgumentException e) {
             outputView.showRetryMessage(e);
-            return readBonusNumber();
+            return readBonusNumber(); // 재귀 호출
+        }
+    }
+
+    private void checkDuplicate(WinningNumbers winningNumbers, BonusNumber bonusNumber) {
+        try {
+            lottoService.checkDuplicate(winningNumbers, bonusNumber);
+        } catch (IllegalArgumentException e) {
+            outputView.showRetryMessage(e);
+            checkDuplicate(winningNumbers, readBonusNumber()); // 재귀 호출
         }
     }
 
