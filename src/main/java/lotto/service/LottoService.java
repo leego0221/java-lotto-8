@@ -15,7 +15,6 @@ public class LottoService {
     private static final int LOTTO_NUMBER_MAX = 45;
     private static final int LOTTO_NUMBER_COUNT = 6;
     private static final long INITIAL_TOTAL_PRIZE = 0L;
-    private static final String PROFIT_RATE_DECIMAL_FORMAT = "%.1f";
 
     private final LottoRankCounter lottoRankCounter;
 
@@ -52,7 +51,7 @@ public class LottoService {
         return lottoRankCounter.getLottoResult();
     }
 
-    public String calculateProfitRate(int totalPurchase) {
+    public double calculateProfitRate(int totalPurchase) {
         Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
 
         Long totalPrize = lottoResult.entrySet()
@@ -61,8 +60,7 @@ public class LottoService {
                 .map(entry -> entry.getKey().getPrize() * entry.getValue())
                 .reduce(INITIAL_TOTAL_PRIZE, Long::sum);
 
-        double profitRate = (double) totalPrize / totalPurchase * 100;
-        return String.format(PROFIT_RATE_DECIMAL_FORMAT, profitRate);
+        return (double) totalPrize / totalPurchase * 100;
     }
 
     public long payPrize(LottoRank lottoRank) {

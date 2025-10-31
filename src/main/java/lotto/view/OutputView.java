@@ -23,6 +23,7 @@ public class OutputView {
     private static final String OUTPUT_COUNT_SUFFIX = "개";
 
     private static final String OUTPUT_TOTAL_PROFIT = "총 수익률은 ";
+    private static final String OUTPUT_DECIMAL_FORMAT = "%.1f";
     private static final String OUTPUT_PERCENT = "%";
     private static final String OUTPUT_TOTAL_PROFIT_SUFFIX = "입니다.";
 
@@ -53,8 +54,9 @@ public class OutputView {
         System.out.println(OUTPUT_FIRST_PLACE + ranks.get(LottoRank.FIRST) + OUTPUT_COUNT_SUFFIX);
     }
 
-    public void showProfitRate(String profitRate) {
-        System.out.println(OUTPUT_TOTAL_PROFIT + profitRate + OUTPUT_PERCENT + OUTPUT_TOTAL_PROFIT_SUFFIX);
+    public void showProfitRate(double profitRate) {
+        String profitRateValue = String.format(OUTPUT_DECIMAL_FORMAT, profitRate);
+        System.out.println(OUTPUT_TOTAL_PROFIT + profitRateValue + OUTPUT_PERCENT + OUTPUT_TOTAL_PROFIT_SUFFIX);
     }
 
     private void printNewLine() {

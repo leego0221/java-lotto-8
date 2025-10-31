@@ -38,7 +38,7 @@ public class LottoController {
         lottos.forEach(lotto -> lottoService.determineRank(lotto, winningNumbers, bonusNumber));
 
         int totalPurchase = purchaseAmount.getPurchaseAmount();
-        String profitRate = lottoService.calculateProfitRate(totalPurchase);
+        double profitRate = lottoService.calculateProfitRate(totalPurchase);
 
         outputView.showWinningStatisticsTitle();
         Map<LottoRank, Integer> ranks = lottoService.getRanks();
