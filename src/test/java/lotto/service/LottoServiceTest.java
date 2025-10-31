@@ -14,8 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 class LottoServiceTest {
 
     private static final String ERROR_MESSAGE = "[ERROR]";
-    private final LottoRankCounter lottoRankCounter = new LottoRankCounter();
-    private final LottoService lottoService = new LottoService(lottoRankCounter);
+    private final LottoService lottoService = new LottoService();
 
     @Test
     void 보너스_번호가_당첨_번호들과_중복되지_않으면_테스트에_성공한다() {
@@ -50,92 +49,5 @@ class LottoServiceTest {
 
         // then
         assertThat(lottos).hasSize(3);
-    }
-
-    @Test
-    void 로또_번호가_당첨_번호_6개와_일치하면_1등이다() {
-        // given
-        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        // when
-        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
-        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
-
-        // then
-        assertThat(lottoResult).contains(entry(LottoRank.FIRST, 1));
-    }
-
-    @Test
-    void 로또_번호가_당청_번호_5개와_보너스_번호와_일치하면_2등이다() {
-        // given
-        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 7));
-        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        // when
-        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
-        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
-
-        // then
-        assertThat(lottoResult).contains(entry(LottoRank.SECOND, 1));
-    }
-
-    @Test
-    void 로또_번호가_당첨_번호_5개와_일치하면_3등이다() {
-        // given
-        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 11));
-        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        // when
-        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
-        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
-
-        // then
-        assertThat(lottoResult).contains(entry(LottoRank.THIRD, 1));
-    }
-
-    @Test
-    void 로또_번호가_당첨_번호_4개와_일치하면_4등이다() {
-        // given
-        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 11, 12));
-        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        // when
-        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
-        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
-
-        // then
-        assertThat(lottoResult).contains(entry(LottoRank.FOURTH, 1));
-    }
-
-    @Test
-    void 로또_번호가_당첨_번호_3개와_일치하면_5등이다() {
-        // given
-        Lotto lotto = new Lotto(List.of(1, 2, 3, 11, 12, 13));
-        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        // when
-        lottoService.determineRank(lotto, winningNumbers, bonusNumber);
-        Map<LottoRank, Integer> lottoResult = lottoRankCounter.getLottoResult();
-
-        // then
-        assertThat(lottoResult).contains(entry(LottoRank.FIFTH, 1));
-    }
-
-    @ParameterizedTest
-    @EnumSource(value = LottoRank.class)
-    void 등수에_따라_당첨_금액을_부여한다(LottoRank lottoRank) {
-        // given by parameter
-
-        // when
-        long prize = lottoService.payPrize(lottoRank);
-
-        // then
-        assertThat(prize).isEqualTo(lottoRank.getPrize());
     }
 }

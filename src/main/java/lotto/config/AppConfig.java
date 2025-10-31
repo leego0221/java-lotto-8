@@ -2,6 +2,7 @@ package lotto.config;
 
 import lotto.controller.LottoController;
 import lotto.domain.LottoRankCounter;
+import lotto.service.LottoRankService;
 import lotto.service.LottoService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
@@ -9,7 +10,7 @@ import lotto.view.OutputView;
 public class AppConfig {
 
     public LottoController lottoController() {
-        return new LottoController(inputView(), outputView(), lottoService());
+        return new LottoController(inputView(), outputView(), lottoService(), lottoRankService());
     }
 
     public InputView inputView() {
@@ -21,7 +22,11 @@ public class AppConfig {
     }
 
     public LottoService lottoService() {
-        return new LottoService(lottoRankCounter());
+        return new LottoService();
+    }
+
+    public LottoRankService lottoRankService() {
+        return new LottoRankService(lottoRankCounter());
     }
 
     public LottoRankCounter lottoRankCounter() {
