@@ -17,10 +17,9 @@ public class InputParser {
     public static List<Integer> parseWinningNumbers(String input) {
         String[] output = input.split(DELIMITER, PARSE_ALL);
         return Arrays.stream(output)
-                .peek(token -> {
-                    validateNotBlank(token);
-                    validateInteger(token);
-                })
+                .map(String::strip)
+                .peek(InputParser::validateNotBlank)
+                .peek(InputParser::validateInteger)
                 .map(Integer::parseInt)
                 .toList();
     }
