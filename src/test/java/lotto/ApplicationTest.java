@@ -59,18 +59,45 @@ class ApplicationTest extends NsTest {
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n"})
-    void 입력이_공백_계열이면_예외가_발생한_뒤_프로그램이_계속된다(String input) {
+    void 구입_금액_입력이_공백_계열이면_예외_처리_후_프로그램이_계속된다(String purchaseAmountInput) {
         assertSimpleTest(() -> {
-            runException(input);
+            runException(purchaseAmountInput);
             assertThat(output()).contains(ERROR_MESSAGE);
         });
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"333333333333333", "3.3", "a"})
-    void 입력이_Integer_타입이_아니면_예외가_발생한_뒤_프로그램이_계속된다(String input) {
+    void 구입_금액_입력이_정수_타입이_아니면_예외_처리_후_프로그램이_계속된다(String purchaseAmountInput) {
         assertSimpleTest(() -> {
-            runException(input);
+            runException(purchaseAmountInput);
+            assertThat(output()).contains(ERROR_MESSAGE);
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {" ", "\t", "\n"})
+    void 당첨_번호_입력이_공백_계열이면_예외_처리_후_프로그램이_계속된다(String winningNumbersInput) {
+        assertSimpleTest(() -> {
+            runException("3000", winningNumbersInput);
+            assertThat(output()).contains(ERROR_MESSAGE);
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {" ", "\t", "\n"})
+    void 보너스_번호_입력이_공백_계열이면_예외_처리_후_프로그램이_계속된다(String bonusNumberInput) {
+        assertSimpleTest(() -> {
+            runException("3000", "1,2,3,4,5,6", bonusNumberInput);
+            assertThat(output()).contains(ERROR_MESSAGE);
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"333333333333333", "3.3", "a"})
+    void 보너스_번호_입력이_정수_타입이_아니면_예외_처리_후_프로그램이_계속된다(String bonusNumberInput) {
+        assertSimpleTest(() -> {
+            runException("3000", "1,2,3,4,5,6", bonusNumberInput);
             assertThat(output()).contains(ERROR_MESSAGE);
         });
     }
