@@ -10,7 +10,8 @@ import static org.assertj.core.api.Assertions.*;
 
 class LottoServiceTest {
 
-    private final LottoService lottoService = new LottoService();
+    private final NumberGenerator numberGenerator = new LottoNumberGenerator();
+    private final LottoService lottoService = new LottoService(numberGenerator);
 
     @Test
     void 구입_금액만큼_로또를_발행하면_테스트가_성공한다() {
