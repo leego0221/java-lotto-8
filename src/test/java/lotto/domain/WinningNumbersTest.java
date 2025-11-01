@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import lotto.exception.ErrorCode;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,55 +15,67 @@ import static org.assertj.core.api.Assertions.*;
 
 class WinningNumbersTest {
 
-    private static final String ERROR_MESSAGE = "[ERROR]";
-
     @ParameterizedTest
     @MethodSource("generateInvalidSizeWinningNumbers")
-    void 당첨_번호가_6개가_아니면_예외가_발생한다(List<Integer> input) {
+    void 당첨_번호의_개수가_6개가_아니면_예외가_발생한다(List<Integer> input) {
         // given by parameter
 
         // when & then
         assertThatThrownBy(() -> new WinningNumbers(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_MESSAGE);
+                .hasMessage(ErrorCode.ERROR_NUMBERS_INVALID_SIZE.getMessage());
     }
 
     @Test
-    void 당첨_번호_중에_중복이_있으면_예외가_발생한다() {
+    void 당첨_번호에_중복된_숫자가_있으면_예외가_발생한다() {
         // given
         List<Integer> input = List.of(1, 2, 3, 3, 4, 5);
 
         // when & then
         assertThatThrownBy(() -> new WinningNumbers(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_MESSAGE);
+                .hasMessage(ErrorCode.ERROR_NUMBERS_DUPLICATE.getMessage());
     }
 
-    @Test
-    void 하나의_당첨_번호가_1에서_45_사이면_테스트에_성공한다() {
-        // given
-        List<Integer> input = List.of(1, 2, 3, 4, 5, 6);
-
-        // when & then
-        assertThatCode(() -> new WinningNumbers(input))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    void 하나의_당첨_번호가_1에서_45_사이를_벗어나면_예외가_발생한다() {
-        // given
-        List<Integer> input = List.of(-1, 0, 3, 15, 36, 100);
+    @ParameterizedTest
+    @MethodSource("generateInvalidRangeWinningNumbers")
+    void 당첨_번호_중_하나라도_1이상_45이하가_아니면_예외가_발생한다(List<Integer> input) {
+        // given by parameter
 
         // when & then
         assertThatThrownBy(() -> new WinningNumbers(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_MESSAGE);
+                .hasMessage(ErrorCode.ERROR_NUMBERS_INVALID_RANGE.getMessage());
+    }
+
+    @Test
+    void 당첨_번호_객체는_외부에서_변경을_시도하면_예외가_발생한다() {
+        // given
+        WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6));
+
+        // when
+        List<Integer> numbers = winningNumbers.getWinningNumbers();
+
+        // then
+        assertThatThrownBy(() -> numbers.set(0, 10))
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     static Stream<Arguments> generateInvalidSizeWinningNumbers() {
         return Stream.of(
                 Arguments.of(List.of(1, 2, 3, 4, 5)),
                 Arguments.of(List.of(1, 2, 3, 4, 5, 6, 7))
+        );
+    }
+
+    static Stream<Arguments> generateInvalidRangeWinningNumbers() {
+        return Stream.of(
+                Arguments.of(List.of(10, 15, 20, 25, 30, 70)),
+                Arguments.of(List.of(10, 15, 20, 25, 75, 70)),
+                Arguments.of(List.of(10, 15, 20, 80, 75, 70)),
+                Arguments.of(List.of(10, 15, 85, 80, 75, 70)),
+                Arguments.of(List.of(10, 90, 85, 80, 75, 70)),
+                Arguments.of(List.of(-10, -1, 0, 46, 77, 99))
         );
     }
 }
