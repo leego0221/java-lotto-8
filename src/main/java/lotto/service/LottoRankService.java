@@ -6,7 +6,9 @@ import java.util.Map;
 
 public class LottoRankService {
 
+    private static final int ZERO_COUNT = 0;
     private static final long INITIAL_TOTAL_PRIZE = 0L;
+    private static final int PERCENT_CONVERSION = 100;
 
     private final LottoRankCounter lottoRankCounter;
 
@@ -30,11 +32,11 @@ public class LottoRankService {
 
         Long totalPrize = lottoResult.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue() != 0)
+                .filter(entry -> !entry.getValue().equals(ZERO_COUNT))
                 .map(entry -> entry.getKey().getPrize() * entry.getValue())
                 .reduce(INITIAL_TOTAL_PRIZE, Long::sum);
 
-        return (double) totalPrize / totalPurchase * 100;
+        return (double) totalPrize / totalPurchase * PERCENT_CONVERSION;
     }
 
     private int countMatchingNumbers(Lotto lotto, WinningNumbers winningNumbers) {

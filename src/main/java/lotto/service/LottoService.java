@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 public class LottoService {
 
     private static final int LOTTO_PRIZE = 1000;
+    private static final int LOOP_START_INDEX = 0;
 
     private final NumberGenerator numberGenerator;
 
@@ -19,7 +20,7 @@ public class LottoService {
     public List<Lotto> purchase(PurchaseAmount purchaseAmount) {
         int purchaseCount = purchaseAmount.getPurchaseAmount() / LOTTO_PRIZE;
 
-        return IntStream.range(0, purchaseCount)
+        return IntStream.range(LOOP_START_INDEX, purchaseCount)
                 .mapToObj(i -> generateLotto())
                 .toList();
     }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Lotto {
 
+    private static final int ONE_COUNT = 1;
     private static final int LOTTO_NUMBER_COUNT = 6;
     private static final int LOTTO_NUMBER_MIN = 1;
     private static final int LOTTO_NUMBER_MAX = 45;
@@ -24,7 +25,7 @@ public class Lotto {
     public int countMatchingNumbers(WinningNumbers winningNumbers) {
         return numbers.stream()
                 .filter(lottoNumber -> isWinningNumber(winningNumbers, lottoNumber))
-                .mapToInt(lottoNumber -> 1)
+                .mapToInt(lottoNumber -> ONE_COUNT)
                 .sum();
     }
 
