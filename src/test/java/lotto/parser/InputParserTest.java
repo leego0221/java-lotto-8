@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class InputParserTest {
 
     @Test
-    void 쉼표_기준으로_구분되고_각_요소가_정수면_테스트에_성공한다() {
+    void 쉼표_기준으로_구분되고_각_요소가_정수면_테스트가_성공한다() {
         // given
         String input = "1,2,3,4,5,6";
 
@@ -26,7 +26,7 @@ class InputParserTest {
     }
 
     @Test
-    void 쉼표_기준으로_구분되고_각_요소가_앞뒤_공백이_있는_정수여도_테스트에_성공한다() {
+    void 쉼표_기준으로_구분되고_각_요소가_앞뒤_공백이_있는_정수여도_테스트가_성공한다() {
         // given
         String input = " 1,  2,  3 , 4  ,5  ,6 ";
 
@@ -39,7 +39,7 @@ class InputParserTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"1,2,", "1,,3", ",2,3", "1,2, ", "1, ,3", " ,2,3"})
-    void 쉼표_기준으로_구분되어도_각_요소가_공백_계열이면_테스트에_실패한다(String input) {
+    void 쉼표_기준으로_구분되어도_각_요소가_공백_계열이면_예외가_발생한다(String input) {
         // given by parameter
 
         // when & then
@@ -50,7 +50,7 @@ class InputParserTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"a,2,3", "1,a,3", "1,2,a"})
-    void 쉼표_기준으로_구분되어도_각_요소가_정수가_아니면_테스트에_실패한다(String input) {
+    void 쉼표_기준으로_구분되어도_각_요소가_정수가_아니면_예외가_발생한다(String input) {
         // given by parameter
 
         // when & then
