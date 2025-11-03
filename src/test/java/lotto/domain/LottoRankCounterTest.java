@@ -46,7 +46,11 @@ class LottoRankCounterTest {
 
     @ParameterizedTest
     @MethodSource("generateTestArguments")
-    void 로또_순위_카운터_갱신_조건이_맞으면_테스트가_성공한다(int matchingCount, boolean isBonusNumberMatched, LottoRank lottoRank) {
+    void 로또_순위_카운터_갱신_조건이_맞으면_테스트가_성공한다(
+            int matchingCount,
+            boolean isBonusNumberMatched,
+            LottoRank lottoRank
+    ) {
         // given by parameter
 
         // when
@@ -59,7 +63,10 @@ class LottoRankCounterTest {
 
     @ParameterizedTest
     @CsvSource(value = {"2,false", "7,true", "-3,false"})
-    void 로또_순위_카운터에_예상치_못한_조건으로_무효_처리되면_테스트가_성공한다(int matchingCount, boolean isBonusNumberMatched) {
+    void 로또_순위_카운터에_예상치_못한_조건으로_무효_처리되면_테스트가_성공한다(
+            int matchingCount,
+            boolean isBonusNumberMatched
+    ) {
         // given by parameter
 
         // when

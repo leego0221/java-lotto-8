@@ -12,7 +12,11 @@ class LottoRankTest {
 
     @ParameterizedTest
     @MethodSource(value = "generateTestArguments")
-    void 로또_순위가_일치_조건과_맞으면_테스트가_성공한다(LottoRank lottoRank, int matchingCount, boolean isBonusNumberMatched) {
+    void 로또_순위가_일치_조건과_맞으면_테스트가_성공한다(
+            LottoRank lottoRank,
+            int matchingCount,
+            boolean isBonusNumberMatched
+    ) {
         // given by parameter
 
         // when
